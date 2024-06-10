@@ -1,2 +1,3 @@
-# dnsjit-lib-clickhouse
-ClickHouse client for dnsjit (WIP)
+# ClickHouse client for dnsjit (WIP)
+
+WORK-IN-PROGRESS - don't use :D
