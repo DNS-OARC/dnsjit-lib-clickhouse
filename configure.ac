@@ -17,6 +17,7 @@ DNSJIT_ROOT=
 AC_ARG_WITH([dnsjit], [AS_HELP_STRING([--with-dnsjit=PATH], [Use PATH when checking for dnsjit binaries and development files])], [
   AC_PATH_PROG([DNSJIT],[dnsjit],,[$withval/bin])
   AS_VAR_APPEND(CFLAGS, [" -I$withval/include"])
+  AS_VAR_APPEND(CXXFLAGS, [" -I$withval/include"])
   DNSJIT_ROOT="$withval"
 ], [
   AC_PATH_PROG([DNSJIT],[dnsjit])

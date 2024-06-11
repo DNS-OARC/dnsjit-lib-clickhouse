@@ -12,11 +12,13 @@ ffi.cdef[[
 typedef struct lib_clickhouse {
     core_log_t _log;
 
-    void* cli;
+    void* options;
+    void* client;
 } lib_clickhouse_t;
 
 core_log_t* lib_clickhouse_log();
 void lib_clickhouse_init(lib_clickhouse_t* self);
+int lib_clickhouse_connect(lib_clickhouse_t* self);
 void lib_clickhouse_destroy(lib_clickhouse_t* self);
 ]]
 local C = ffi.C
@@ -41,6 +43,11 @@ function Clickhouse:log()
         return C.lib_clickhouse_log()
     end
     return self.obj._log
+end
+
+-- TODO
+function Clickhouse:connect()
+    return C.lib_clickhouse_connect(self.obj)
 end
 
 return Clickhouse
