@@ -13,6 +13,8 @@ struct clickhouse_client {
 } typedef clickhouse_client_t;
 
 clickhouse_client_t* clickhouse_client_new(const clickhouse_client_options_t*);
+void clickhouse_client_execute(clickhouse_client_t*, const char*);
+void clickhouse_client_select(clickhouse_client_t*, const char*);
 void clickhouse_client_destroy(clickhouse_client_t*);
 
 #ifdef __cplusplus

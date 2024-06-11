@@ -31,17 +31,42 @@ void lib_clickhouse_init(lib_clickhouse_t* self)
     self->options = clickhouse_client_options_new();
 }
 
-int lib_clickhouse_connect(lib_clickhouse_t* self)
+int lib_clickhouse_set_host(lib_clickhouse_t* self, const char* host)
 {
     mlassert_self();
 
-    if (self->client) {
-        return -1;
-    }
+    return clickhouse_client_options_set(self->options, CLICKHOUSE_CLIENT_OPTION_HOST, host, 0);
+}
+
+int lib_clickhouse_set_port(lib_clickhouse_t* self, double port)
+{
+    mlassert_self();
+
+    return clickhouse_client_options_set(self->options, CLICKHOUSE_CLIENT_OPTION_PORT, 0, port);
+}
+
+void lib_clickhouse_connect(lib_clickhouse_t* self)
+{
+    mlassert_self();
+    lassert(!self->client, "client is already connected");
 
     self->client = clickhouse_client_new(self->options);
+}
 
-    return 0;
+void lib_clickhouse_execute(lib_clickhouse_t* self, const char* query)
+{
+    mlassert_self();
+    lassert(self->client, "client is nil");
+
+    clickhouse_client_execute(self->client, query);
+}
+
+void lib_clickhouse_select(lib_clickhouse_t* self, const char* query)
+{
+    mlassert_self();
+    lassert(self->client, "client is nil");
+
+    clickhouse_client_select(self->client, query);
 }
 
 void lib_clickhouse_destroy(lib_clickhouse_t* self)

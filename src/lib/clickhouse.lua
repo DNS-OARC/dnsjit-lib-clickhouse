@@ -17,9 +17,13 @@ typedef struct lib_clickhouse {
 } lib_clickhouse_t;
 
 core_log_t* lib_clickhouse_log();
-void lib_clickhouse_init(lib_clickhouse_t* self);
-int lib_clickhouse_connect(lib_clickhouse_t* self);
-void lib_clickhouse_destroy(lib_clickhouse_t* self);
+void lib_clickhouse_init(lib_clickhouse_t*);
+int lib_clickhouse_set_host(lib_clickhouse_t*, const char*);
+int lib_clickhouse_set_port(lib_clickhouse_t*, double);
+void lib_clickhouse_connect(lib_clickhouse_t*);
+void lib_clickhouse_execute(lib_clickhouse_t*, const char*);
+void lib_clickhouse_select(lib_clickhouse_t*, const char*);
+void lib_clickhouse_destroy(lib_clickhouse_t*);
 ]]
 local C = ffi.C
 
@@ -46,8 +50,28 @@ function Clickhouse:log()
 end
 
 -- TODO
+function Clickhouse:set_host(host)
+    return C.lib_clickhouse_set_host(self.obj, host)
+end
+
+-- TODO
+function Clickhouse:set_port(port)
+    return C.lib_clickhouse_set_port(self.obj, port)
+end
+
+-- TODO
 function Clickhouse:connect()
-    return C.lib_clickhouse_connect(self.obj)
+    C.lib_clickhouse_connect(self.obj)
+end
+
+-- TODO
+function Clickhouse:execute(query)
+    C.lib_clickhouse_execute(self.obj, query)
+end
+
+-- TODO
+function Clickhouse:select(query)
+    C.lib_clickhouse_select(self.obj, query)
 end
 
 return Clickhouse
