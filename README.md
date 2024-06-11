@@ -1,3 +1,16 @@
 # ClickHouse client for dnsjit (WIP)
 
-WORK-IN-PROGRESS - don't use/fork etc :D it will all be rebased later on
+            ,     \    /      ,
+           / \    )\__/(     / \
+          /   \  (_\  /_)   /   \
+     ____/_____\__\@  @/___/_____\____
+    |             |\../|              |
+    |              \VV/               |
+    |        WORK-IN-PROGRESS         |
+    |_________________________________|
+     |    /\ /      \\       \ /\    |
+     |  /   V        ))       V   \  |
+     |/     `       //        '     \|
+     `              V                '
+
+don't use/fork etc :D it will all be rebased later on
