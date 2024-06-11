@@ -88,4 +88,3 @@ build
 # Project specific files
 *.luao
 *.luaho
-clickhouse-cpp
