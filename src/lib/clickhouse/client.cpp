@@ -1,7 +1,5 @@
 #include "config.h"
 
-#include "client.h"
-
 #include <clickhouse/client.h>
 
 #include <stdexcept>
@@ -11,35 +9,43 @@ using namespace clickhouse;
 
 extern "C" {
 
-#include <dnsjit/core/log.h>
+#include "../clickhouse.h"
+
+#include <dnsjit/core/assert.h>
+
+static core_log_t       _log      = LOG_T_INIT("dnsjit.lib.clickhouse.client");
 
 #define self ((Client*)_self)
 
-clickhouse_client_t* clickhouse_client_new(const clickhouse_client_options_t* options)
+lib_clickhouse_client_t* lib_clickhouse_client_new(const lib_clickhouse_client_options_t* options)
 {
+    // TOOD: move connection to connect() func
+
     Client* client;
 
     try {
-        gldebug("lib.clickhouse.client connecting");
+        mldebug("connecting");
         client = new Client(*(ClientOptions*)options);
 
-        gldebug("lib.clickhouse.client current endpoint: %s", client->GetCurrentEndpoint().value().host.c_str());
+        mldebug("current endpoint: %s", client->GetCurrentEndpoint().value().host.c_str());
     } catch (const std::exception& e) {
-        glcritical("lib.clickhouse.client exception: %s", e.what());
+        mlcritical("exception: %s", e.what());
     }
 
-    return (clickhouse_client_t*)client;
+    return (lib_clickhouse_client_t*)client;
 }
 
-void clickhouse_client_execute(clickhouse_client_t* _self, const char* query)
+void lib_clickhouse_client_execute(lib_clickhouse_client_t* _self, const char* query)
 {
-    gldebug("lib.clickhouse.client execute: %s", query);
+    mlassert_self();
+    mldebug("execute: %s", query);
     self->Execute(query);
 }
 
-void clickhouse_client_select(clickhouse_client_t* _self, const char* query)
+void lib_clickhouse_client_select(lib_clickhouse_client_t* _self, const char* query)
 {
-    gldebug("lib.clickhouse.client select: %s", query);
+    mlassert_self();
+    mldebug("select: %s", query);
     self->Select(query, [](const Block& block)
         {
             for (size_t row = 0; row < block.GetRowCount(); ++row) {
@@ -64,7 +70,7 @@ void clickhouse_client_select(clickhouse_client_t* _self, const char* query)
     );
 }
 
-void clickhouse_client_destroy(clickhouse_client_t* _self)
+void lib_clickhouse_client_delete(lib_clickhouse_client_t* _self)
 {
     delete self;
 }
