@@ -2,7 +2,15 @@
 
 /* COLUMN */
 
+enum lib_clickhouse_column_type {
+    LIB_CLICKHOUSE_COLUMN_TYPE_UINT64,
+    LIB_CLICKHOUSE_COLUMN_TYPE_STRING
+};
+
 typedef struct lib_clickhouse_column lib_clickhouse_column_t;
+
+lib_clickhouse_column_t* lib_clickhouse_column_new(enum lib_clickhouse_column_type);
+void lib_clickhouse_column_delete(lib_clickhouse_column_t*);
 
 
 /* BLOCK */

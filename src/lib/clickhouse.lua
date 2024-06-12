@@ -15,6 +15,7 @@ local t_name = "lib_clickhouse_t"
 local lib_clickhouse_t = ffi.typeof(t_name)
 local Clickhouse = {}
 
+local Column = require("dnsjit.lib.clickhouse.column")
 local Block = require("dnsjit.lib.clickhouse.block")
 local ClientOptions = require("dnsjit.lib.clickhouse.client_options")
 local Client = require("dnsjit.lib.clickhouse.client")
@@ -23,6 +24,7 @@ local Client = require("dnsjit.lib.clickhouse.client")
 function Clickhouse.new()
     local self = {
         obj = lib_clickhouse_t(),
+        Column = Column,
         Block = Block,
         ClientOptions = ClientOptions,
         Client = Client

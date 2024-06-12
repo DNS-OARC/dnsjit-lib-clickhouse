@@ -29,3 +29,6 @@ cli:execute("CREATE TEMPORARY TABLE IF NOT EXISTS test_client (id UInt64, name S
 cli:execute("INSERT INTO test_client (id, name) VALUES (1, 'one')")
 cli:select("SELECT * FROM test_client")
 cli:execute("DROP TEMPORARY TABLE test_client")
+
+
+local id = clickhouse.Column.new_uint64()
