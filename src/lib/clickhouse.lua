@@ -1,13 +1,9 @@
 module(...,package.seeall)
 
---require("dnsjit.core.log")
-
---local loader = require("dnsjit.core.loader")
---loader.load("dnsjit-lib-clickhouse/clickhouse")
---loader.load("./src/.lib/clickhouse.so")
+local loader = require("dnsjit.core.loader")
+loader.load("dnsjit-lib-clickhouse/clickhouse")
 
 local ffi = require("ffi")
-ffi.load("./src/.libs/clickhouse.so", true)
 require("dnsjit.lib.clickhouse_h")
 local C = ffi.C
 

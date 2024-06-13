@@ -21,8 +21,13 @@ clickhouse_la_SOURCES = lib/clickhouse.c lib/clickhouse/client.cpp \
   lib/clickhouse/column.cpp
 clickhouse_la_LDFLAGS = -Wl,-E -module -avoid-version -shared -L../clickhouse-cpp/clickhouse -lclickhouse-cpp-lib
 
-clickhouselibdir = $(datadir)/lua/5.1/example/lib
-dist_clickhouselib_DATA = lib/clickhouse.lua
+clickhouselibdir = $(datadir)/lua/5.1/dnsjit/lib
+dist_clickhouselib_DATA = lib/clickhouse.lua lib/clickhouse_h.lua
+
+clickhouselib2dir = $(datadir)/lua/5.1/dnsjit/lib/clickhouse
+dist_clickhouselib2_DATA = lib/clickhouse/client.lua \
+  lib/clickhouse/client_options.lua lib/clickhouse/block.lua \
+  lib/clickhouse/column.lua
 
 BUILT_SOURCES = lib/clickhouse_h.lua
 
