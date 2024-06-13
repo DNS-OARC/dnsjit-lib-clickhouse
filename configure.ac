@@ -2,7 +2,8 @@ AC_PREREQ(2.61)
 AC_INIT([dnsjit-lib-clickhouse], [0.1.0],,)
 AM_INIT_AUTOMAKE([-Wall -Werror foreign subdir-objects])
 AC_CONFIG_HEADER([src/config.h])
-AC_CONFIG_COMMANDS([clickhouse-cpp], [cmake -S "$srcdir/clickhouse-cpp" -B clickhouse-cpp -D WITH_OPENSSL=ON -D WITH_SYSTEM_LZ4=ON -D WITH_SYSTEM_ZSTD=ON -D BUILD_SHARED_LIBS=ON])
+export cmake_install_prefix="$prefix"
+AC_CONFIG_COMMANDS([clickhouse-cpp], [cmake -D "CMAKE_INSTALL_PREFIX=$cmake_install_prefix" -S "$srcdir/clickhouse-cpp" -B clickhouse-cpp -D WITH_OPENSSL=ON -D WITH_SYSTEM_LZ4=ON -D WITH_SYSTEM_ZSTD=ON -D BUILD_SHARED_LIBS=ON])
 
 # Checks for programs.
 AC_PROG_CC
