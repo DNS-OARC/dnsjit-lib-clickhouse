@@ -5,10 +5,10 @@ log.enable("all")
 
 --local ch = require("dnsjit.lib.clickhouse").new()
 
-package.path = package.path .. ";/home/jerry/dnsjit/build/root/usr/local/share/lua/5.1/?.lua"
-print(package.path)
-package.cpath = package.cpath .. ";/home/jerry/dnsjit/build/root/usr/local/lib/lua/5.1/?.so"
-print(package.cpath)
+-- package.path = package.path .. ";/home/jerry/dnsjit/build/root/usr/local/share/lua/5.1/?.lua"
+-- print(package.path)
+-- package.cpath = package.cpath .. ";/home/jerry/dnsjit/build/root/usr/local/lib/lua/5.1/?.so"
+-- print(package.cpath)
 local clickhouse = require("dnsjit.lib.clickhouse").new()
 
 local opts = clickhouse.ClientOptions.new()
