@@ -14,7 +14,7 @@ end
 
 -- TODO
 function Block:append_column(name, column)
-    C.lib_clickhouse_block_append_column(self, name, column)
+    C.lib_clickhouse_block_append_column(self.obj, name, column.obj)
 end
 
 return Block

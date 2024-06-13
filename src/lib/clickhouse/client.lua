@@ -25,4 +25,9 @@ function Client:select(query)
     C.lib_clickhouse_client_select(self.obj, query)
 end
 
+-- TODO
+function Client:insert(tbl, block)
+    C.lib_clickhouse_client_insert(self.obj, tbl, block.obj)
+end
+
 return Client

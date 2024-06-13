@@ -15,20 +15,18 @@ local cli = clickhouse.Client.new(opts)
 
 cli:execute("CREATE TEMPORARY TABLE IF NOT EXISTS test_client (id UInt64, name String)")
 
--- local id = require("dnsjit.lib.clickhouse.column.uint64").new()
--- id:append(1)
--- id:append(7)
--- local name = require("dnsjit.lib.clickhouse.column.string").new()
--- name:append("one")
--- name:append("seven")
--- local block = require("dnsjit.lib.clickhouse.block").new()
--- block:append_column("id", id)
--- block:append_column("name", name)
--- ch:insert("test_client", block)
+local id = clickhouse.Column.new_uint64()
+id:append(1)
+id:append(7)
+local name = clickhouse.Column.new_string()
+name:append("one")
+name:append("seven")
+local block = clickhouse.Block.new()
+block:append_column("id", id)
+block:append_column("name", name)
 
-cli:execute("INSERT INTO test_client (id, name) VALUES (1, 'one')")
+cli:insert("test_client", block)
+
+-- cli:execute("INSERT INTO test_client (id, name) VALUES (1, 'one')")
 cli:select("SELECT * FROM test_client")
 cli:execute("DROP TEMPORARY TABLE test_client")
-
-
-local id = clickhouse.Column.new_uint64()

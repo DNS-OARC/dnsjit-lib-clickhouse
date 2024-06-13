@@ -75,4 +75,11 @@ void lib_clickhouse_client_delete(lib_clickhouse_client_t* _self)
     delete self;
 }
 
+void lib_clickhouse_client_insert(lib_clickhouse_client_t* _self, const char* tbl, const lib_clickhouse_block_t* block)
+{
+    mlassert_self();
+
+    self->Insert(tbl, *(Block*)block);
+}
+
 }

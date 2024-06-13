@@ -16,4 +16,16 @@ function Column.new_uint64()
     return Column.new("LIB_CLICKHOUSE_COLUMN_TYPE_UINT64")
 end
 
+function Column.new_string()
+    return Column.new("LIB_CLICKHOUSE_COLUMN_TYPE_STRING")
+end
+
+function Column:append(value)
+    if type(value) == "number" then
+        C.lib_clickhouse_column_append_number(self.obj, value)
+    elseif type(value) == "string" then
+        C.lib_clickhouse_column_append_string(self.obj, value)
+    end
+end
+
 return Column

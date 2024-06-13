@@ -11,6 +11,9 @@ typedef struct lib_clickhouse_column lib_clickhouse_column_t;
 
 lib_clickhouse_column_t* lib_clickhouse_column_new(enum lib_clickhouse_column_type);
 void lib_clickhouse_column_delete(lib_clickhouse_column_t*);
+void lib_clickhouse_column_append(lib_clickhouse_column_t*);
+void lib_clickhouse_column_append_number(lib_clickhouse_column_t*, const double);
+void lib_clickhouse_column_append_string(lib_clickhouse_column_t*, const char*);
 
 
 /* BLOCK */
@@ -47,6 +50,7 @@ lib_clickhouse_client_t* lib_clickhouse_client_new(const lib_clickhouse_client_o
 void lib_clickhouse_client_execute(lib_clickhouse_client_t*, const char*);
 void lib_clickhouse_client_select(lib_clickhouse_client_t*, const char*);
 void lib_clickhouse_client_delete(lib_clickhouse_client_t*);
+void lib_clickhouse_client_insert(lib_clickhouse_client_t*, const char*, const lib_clickhouse_block_t*);
 
 
 /* CLICKHOUSE */
