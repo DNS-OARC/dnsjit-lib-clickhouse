@@ -1,19 +1,32 @@
 // lua:require("dnsjit.core.log")
+// lua:require("dnsjit.core.timespec")
 
 /* COLUMN */
 
 enum lib_clickhouse_column_type {
+    LIB_CLICKHOUSE_COLUMN_TYPE_INT8,
+    LIB_CLICKHOUSE_COLUMN_TYPE_INT16,
+    LIB_CLICKHOUSE_COLUMN_TYPE_INT32,
+    LIB_CLICKHOUSE_COLUMN_TYPE_INT64,
+    LIB_CLICKHOUSE_COLUMN_TYPE_UINT8,
+    LIB_CLICKHOUSE_COLUMN_TYPE_UINT16,
+    LIB_CLICKHOUSE_COLUMN_TYPE_UINT32,
     LIB_CLICKHOUSE_COLUMN_TYPE_UINT64,
-    LIB_CLICKHOUSE_COLUMN_TYPE_STRING
+    LIB_CLICKHOUSE_COLUMN_TYPE_STRING,
+    LIB_CLICKHOUSE_COLUMN_TYPE_DATETIME64,
+    LIB_CLICKHOUSE_COLUMN_TYPE_IPV4,
+    LIB_CLICKHOUSE_COLUMN_TYPE_IPV6
 };
 
 typedef struct lib_clickhouse_column lib_clickhouse_column_t;
 
 lib_clickhouse_column_t* lib_clickhouse_column_new(enum lib_clickhouse_column_type);
+lib_clickhouse_column_t* lib_clickhouse_column_new_datetime64(int);
 void lib_clickhouse_column_delete(lib_clickhouse_column_t*);
 void lib_clickhouse_column_append(lib_clickhouse_column_t*);
 void lib_clickhouse_column_append_number(lib_clickhouse_column_t*, const double);
 void lib_clickhouse_column_append_string(lib_clickhouse_column_t*, const char*);
+void lib_clickhouse_column_append_timespec(lib_clickhouse_column_t*, core_timespec_t*);
 
 
 /* BLOCK */

@@ -53,11 +53,41 @@ void lib_clickhouse_client_select(lib_clickhouse_client_t* _self, const char* qu
                     std::cout << block.GetColumnName(col) << " " << block[col]->Type()->GetName() << " ";
 
                     switch (block[col]->Type()->GetCode()) {
+                    case Type::Code::Int8:
+                        std::cout << int(block[col]->As<ColumnInt8>()->At(row));
+                        break;
+                    case Type::Code::Int16:
+                        std::cout << block[col]->As<ColumnInt16>()->At(row);
+                        break;
+                    case Type::Code::Int32:
+                        std::cout << block[col]->As<ColumnInt32>()->At(row);
+                        break;
+                    case Type::Code::Int64:
+                        std::cout << block[col]->As<ColumnInt64>()->At(row);
+                        break;
+                    case Type::Code::UInt8:
+                        std::cout << unsigned(block[col]->As<ColumnUInt8>()->At(row));
+                        break;
+                    case Type::Code::UInt16:
+                        std::cout << block[col]->As<ColumnUInt16>()->At(row);
+                        break;
+                    case Type::Code::UInt32:
+                        std::cout << block[col]->As<ColumnUInt32>()->At(row);
+                        break;
                     case Type::Code::UInt64:
                         std::cout << block[col]->As<ColumnUInt64>()->At(row);
                         break;
                     case Type::Code::String:
                         std::cout << block[col]->As<ColumnString>()->At(row);
+                        break;
+                    case Type::Code::DateTime64:
+                        std::cout << block[col]->As<ColumnDateTime64>()->At(row);
+                        break;
+                    case Type::Code::IPv4:
+                        std::cout << block[col]->As<ColumnIPv4>()->AsString(row);
+                        break;
+                    case Type::Code::IPv6:
+                        std::cout << block[col]->As<ColumnIPv6>()->AsString(row);
                         break;
                     default:
                         break;

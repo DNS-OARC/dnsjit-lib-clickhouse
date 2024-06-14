@@ -6,10 +6,38 @@ local Column = {}
 -- Create a new Clickhouse Column.
 function Column.new(type)
     local self = {
-        obj = C.lib_clickhouse_column_new(type),
+        obj = C.lib_clickhouse_column_new(type)
     }
     ffi.gc(self.obj, C.lib_clickhouse_column_delete)
     return setmetatable(self, { __index = Column })
+end
+
+function Column.new_int8()
+    return Column.new("LIB_CLICKHOUSE_COLUMN_TYPE_INT8")
+end
+
+function Column.new_int16()
+    return Column.new("LIB_CLICKHOUSE_COLUMN_TYPE_INT16")
+end
+
+function Column.new_int32()
+    return Column.new("LIB_CLICKHOUSE_COLUMN_TYPE_INT32")
+end
+
+function Column.new_int64()
+    return Column.new("LIB_CLICKHOUSE_COLUMN_TYPE_INT64")
+end
+
+function Column.new_uint8()
+    return Column.new("LIB_CLICKHOUSE_COLUMN_TYPE_UINT8")
+end
+
+function Column.new_uint16()
+    return Column.new("LIB_CLICKHOUSE_COLUMN_TYPE_UINT16")
+end
+
+function Column.new_uint32()
+    return Column.new("LIB_CLICKHOUSE_COLUMN_TYPE_UINT32")
 end
 
 function Column.new_uint64()
@@ -20,11 +48,32 @@ function Column.new_string()
     return Column.new("LIB_CLICKHOUSE_COLUMN_TYPE_STRING")
 end
 
+function Column.new_datetime64(decimals)
+    local self = {
+        obj = C.lib_clickhouse_column_new_datetime64(decimals)
+    }
+    ffi.gc(self.obj, C.lib_clickhouse_column_delete)
+    return setmetatable(self, { __index = Column })
+end
+
+function Column.new_ipv4()
+    return Column.new("LIB_CLICKHOUSE_COLUMN_TYPE_IPV4")
+end
+
+function Column.new_ipv6()
+    return Column.new("LIB_CLICKHOUSE_COLUMN_TYPE_IPV6")
+end
+
 function Column:append(value)
-    if type(value) == "number" then
+    local t = type(value)
+    if t == "number" then
         C.lib_clickhouse_column_append_number(self.obj, value)
-    elseif type(value) == "string" then
+    elseif t == "string" then
         C.lib_clickhouse_column_append_string(self.obj, value)
+    elseif t == "cdata" then
+        if ffi.istype("core_timespec_t", value) == true then
+            C.lib_clickhouse_column_append_timespec(self.obj, value)
+        end
     end
 end
 
