@@ -77,4 +77,8 @@ function Column:append(value)
     end
 end
 
+function Column:clear()
+    C.lib_clickhouse_column_clear(self.obj)
+end
+
 return Column

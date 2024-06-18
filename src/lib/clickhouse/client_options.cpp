@@ -45,26 +45,29 @@ int lib_clickhouse_client_options_set(lib_clickhouse_client_options_t* _self, en
     try {
         switch (option) {
         case LIB_CLICKHOUSE_CLIENT_OPTION_HOST:
+            mlassert(str, "str is nil");
             self->SetHost(str);
             break;
         case LIB_CLICKHOUSE_CLIENT_OPTION_PORT:
             self->SetPort(num);
             break;
         case LIB_CLICKHOUSE_CLIENT_OPTION_USER:
+            mlassert(str, "str is nil");
             self->SetUser(str);
             break;
         case LIB_CLICKHOUSE_CLIENT_OPTION_PASSWORD:
+            mlassert(str, "str is nil");
             self->SetPassword(str);
             break;
         case LIB_CLICKHOUSE_CLIENT_OPTION_DEFAULT_DATABASE:
+            mlassert(str, "str is nil");
             self->SetDefaultDatabase(str);
             break;
         default:
             return -1;
         }
     } catch (const std::exception& e) {
-        mlwarning("exception: %s", e.what());
-        return -1;
+        mlfatal("exception: %s", e.what());
     }
     return 0;
 }

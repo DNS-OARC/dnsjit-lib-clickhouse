@@ -28,7 +28,14 @@ void lib_clickhouse_block_delete(lib_clickhouse_block_t* _self)
 void lib_clickhouse_block_append_column(lib_clickhouse_block_t* _self, const char* name, lib_clickhouse_column_t* column)
 {
     mlassert_self();
-    self->AppendColumn(name, *(ColumnRef*)column);
+    mlassert(name, "name is nil");
+    mlassert(column, "column is nil");
+
+    try {
+        self->AppendColumn(name, *(ColumnRef*)column);
+    } catch (const std::exception& e) {
+        mlfatal("exception: %s", e.what());
+    }
 }
 
 }

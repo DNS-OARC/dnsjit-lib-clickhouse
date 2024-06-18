@@ -68,6 +68,7 @@ lib_clickhouse_column_t* lib_clickhouse_column_new_datetime64(int decimals)
 
 void lib_clickhouse_column_delete(lib_clickhouse_column_t* _self)
 {
+    mlassert_self();
     delete self;
 }
 
@@ -75,63 +76,67 @@ void lib_clickhouse_column_append_number(lib_clickhouse_column_t* _self, const d
 {
     mlassert_self();
 
-    switch ((*self)->Type()->GetCode()) {
-    case Type::Code::Int8:
-        if (auto col = (*self)->As<ColumnInt8>()) {
-            col->Append(number);
-            return;
+    try {
+        switch ((*self)->Type()->GetCode()) {
+        case Type::Code::Int8:
+            if (auto col = (*self)->As<ColumnInt8>()) {
+                col->Append(number);
+                return;
+            }
+            break;
+        case Type::Code::Int16:
+            if (auto col = (*self)->As<ColumnInt16>()) {
+                col->Append(number);
+                return;
+            }
+            break;
+        case Type::Code::Int32:
+            if (auto col = (*self)->As<ColumnInt32>()) {
+                col->Append(number);
+                return;
+            }
+            break;
+        case Type::Code::Int64:
+            if (auto col = (*self)->As<ColumnInt64>()) {
+                col->Append(number);
+                return;
+            }
+            break;
+        case Type::Code::UInt8:
+            if (auto col = (*self)->As<ColumnUInt8>()) {
+                col->Append(number);
+                return;
+            }
+            break;
+        case Type::Code::UInt16:
+            if (auto col = (*self)->As<ColumnUInt16>()) {
+                col->Append(number);
+                return;
+            }
+            break;
+        case Type::Code::UInt32:
+            if (auto col = (*self)->As<ColumnUInt32>()) {
+                col->Append(number);
+                return;
+            }
+            break;
+        case Type::Code::UInt64:
+            if (auto col = (*self)->As<ColumnUInt64>()) {
+                col->Append(number);
+                return;
+            }
+            break;
+        case Type::Code::IPv4:
+            if (auto col = (*self)->As<ColumnIPv4>()) {
+                col->Append(number);
+                return;
+            }
+            break;
+        default:
+            break;
         }
-        break;
-    case Type::Code::Int16:
-        if (auto col = (*self)->As<ColumnInt16>()) {
-            col->Append(number);
-            return;
-        }
-        break;
-    case Type::Code::Int32:
-        if (auto col = (*self)->As<ColumnInt32>()) {
-            col->Append(number);
-            return;
-        }
-        break;
-    case Type::Code::Int64:
-        if (auto col = (*self)->As<ColumnInt64>()) {
-            col->Append(number);
-            return;
-        }
-        break;
-    case Type::Code::UInt8:
-        if (auto col = (*self)->As<ColumnUInt8>()) {
-            col->Append(number);
-            return;
-        }
-        break;
-    case Type::Code::UInt16:
-        if (auto col = (*self)->As<ColumnUInt16>()) {
-            col->Append(number);
-            return;
-        }
-        break;
-    case Type::Code::UInt32:
-        if (auto col = (*self)->As<ColumnUInt32>()) {
-            col->Append(number);
-            return;
-        }
-        break;
-    case Type::Code::UInt64:
-        if (auto col = (*self)->As<ColumnUInt64>()) {
-            col->Append(number);
-            return;
-        }
-        break;
-    case Type::Code::IPv4:
-        if (auto col = (*self)->As<ColumnIPv4>()) {
-            col->Append(number);
-            return;
-        }
-        break;
-    default:
-        break;
+    } catch (const std::exception& e) {
+        mlfatal("exception: %s", e.what());
     }
 
     mlfatal("column not number compatible");
@@ -142,27 +147,31 @@ void lib_clickhouse_column_append_string(lib_clickhouse_column_t* _self, const c
     mlassert_self();
     mlassert(string, "string is nil");
 
-    switch ((*self)->Type()->GetCode()) {
-    case Type::Code::String:
-        if (auto col = (*self)->As<ColumnString>()) {
-            col->Append(string);
-            return;
+    try {
+        switch ((*self)->Type()->GetCode()) {
+        case Type::Code::String:
+            if (auto col = (*self)->As<ColumnString>()) {
+                col->Append(string);
+                return;
+            }
+            break;
+        case Type::Code::IPv4:
+            if (auto col = (*self)->As<ColumnIPv4>()) {
+                col->Append(string);
+                return;
+            }
+            break;
+        case Type::Code::IPv6:
+            if (auto col = (*self)->As<ColumnIPv6>()) {
+                col->Append(string);
+                return;
+            }
+            break;
+        default:
+            break;
         }
-        break;
-    case Type::Code::IPv4:
-        if (auto col = (*self)->As<ColumnIPv4>()) {
-            col->Append(string);
-            return;
-        }
-        break;
-    case Type::Code::IPv6:
-        if (auto col = (*self)->As<ColumnIPv6>()) {
-            col->Append(string);
-            return;
-        }
-        break;
-    default:
-        break;
+    } catch (const std::exception& e) {
+        mlfatal("exception: %s", e.what());
     }
 
     mlfatal("column not string compatible");
@@ -173,18 +182,29 @@ void lib_clickhouse_column_append_timespec(lib_clickhouse_column_t* _self, core_
     mlassert_self();
     mlassert(timespec, "timespec is nil");
 
-    switch ((*self)->Type()->GetCode()) {
-    case Type::Code::DateTime64:
-        if (auto col = (*self)->As<ColumnDateTime64>()) {
-            col->Append(timespec->sec * 1000000000 + timespec->nsec);
-            return;
+    try {
+        switch ((*self)->Type()->GetCode()) {
+        case Type::Code::DateTime64:
+            if (auto col = (*self)->As<ColumnDateTime64>()) {
+                col->Append(timespec->sec * 1000000000 + timespec->nsec);
+                return;
+            }
+            break;
+        default:
+            break;
         }
-        break;
-    default:
-        break;
+    } catch (const std::exception& e) {
+        mlfatal("exception: %s", e.what());
     }
 
     mlfatal("column not timespec compatible");
+}
+
+void lib_clickhouse_column_clear(lib_clickhouse_column_t* _self)
+{
+    mlassert_self();
+
+    (*self)->Clear();
 }
 
 }
