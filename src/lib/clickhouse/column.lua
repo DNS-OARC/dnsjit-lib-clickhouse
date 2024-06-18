@@ -73,6 +73,9 @@ function Column:append(value)
     elseif t == "cdata" then
         if ffi.istype("core_timespec_t", value) == true then
             C.lib_clickhouse_column_append_timespec(self.obj, value)
+        else
+            -- try number for all (u)int8/16/32/64_t's
+            C.lib_clickhouse_column_append_number(self.obj, value)
         end
     end
 end
