@@ -26,10 +26,10 @@ lib_clickhouse_client_t* lib_clickhouse_client_new(const lib_clickhouse_client_o
     Client* client;
 
     try {
-        mldebug("connecting");
+        // mldebug("connecting");
         client = new Client(*(ClientOptions*)options);
 
-        mldebug("current endpoint: %s", client->GetCurrentEndpoint().value().host.c_str());
+        // mldebug("current endpoint: %s", client->GetCurrentEndpoint().value().host.c_str());
     } catch (const std::exception& e) {
         mlfatal("exception: %s", e.what());
     }
@@ -43,7 +43,7 @@ void lib_clickhouse_client_execute(lib_clickhouse_client_t* _self, const char* q
     mlassert(query, "query is nil");
 
     try {
-        mldebug("execute: %s", query);
+        // mldebug("execute: %s", query);
         self->Execute(query);
     } catch (const std::exception& e) {
         mlfatal("exception: %s", e.what());
