@@ -80,6 +80,23 @@ function Column:append(value)
     end
 end
 
+function Column:append_number(value)
+    C.lib_clickhouse_column_append_number(self.obj, value)
+end
+
+function Column:append_string(value)
+    C.lib_clickhouse_column_append_string(self.obj, value)
+end
+
+function Column:append_timespec(value)
+    C.lib_clickhouse_column_append_timespec(self.obj, value)
+end
+
+-- todo: doc value size up to caller to match column
+function Column:append_ipaddr(value)
+    C.lib_clickhouse_column_append_ipaddr(self.obj, value)
+end
+
 function Column:clear()
     C.lib_clickhouse_column_clear(self.obj)
 end
