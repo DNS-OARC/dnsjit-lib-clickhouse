@@ -27,7 +27,7 @@ void lib_clickhouse_column_append(lib_clickhouse_column_t*);
 void lib_clickhouse_column_append_number(lib_clickhouse_column_t*, const double);
 void lib_clickhouse_column_append_string(lib_clickhouse_column_t*, const char*);
 void lib_clickhouse_column_append_timespec(lib_clickhouse_column_t*, core_timespec_t*);
-void lib_clickhouse_column_append_ipaddr(lib_clickhouse_column_t*, uint8_t*);
+void lib_clickhouse_column_append_ipaddr(lib_clickhouse_column_t*, uint8_t, uint8_t*);
 void lib_clickhouse_column_clear(lib_clickhouse_column_t*);
 
 

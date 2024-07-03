@@ -93,8 +93,8 @@ function Column:append_timespec(value)
 end
 
 -- todo: doc value size up to caller to match column
-function Column:append_ipaddr(value)
-    C.lib_clickhouse_column_append_ipaddr(self.obj, value)
+function Column:append_ipaddr(ipv, value)
+    C.lib_clickhouse_column_append_ipaddr(self.obj, ipv, value)
 end
 
 function Column:clear()

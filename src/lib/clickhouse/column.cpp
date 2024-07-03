@@ -352,7 +352,7 @@ void lib_clickhouse_column_append_timespec(lib_clickhouse_column_t* _self, core_
     mlfatal("column not timespec compatible");
 }
 
-void lib_clickhouse_column_append_ipaddr(lib_clickhouse_column_t* _self, uint8_t* addr)
+void lib_clickhouse_column_append_ipaddr(lib_clickhouse_column_t* _self, uint8_t ipv, uint8_t* addr)
 {
     mlassert_self();
     mlassert(addr, "addr is nil");
@@ -360,12 +360,24 @@ void lib_clickhouse_column_append_ipaddr(lib_clickhouse_column_t* _self, uint8_t
     try {
         switch ((*self)->Type()->GetCode()) {
         case Type::Code::IPv4:
+            if (ipv != 4) {
+                mlfatal("unable to append ColumnIPv4, not ipv == 4");
+            }
             if (auto col = (*self)->As<ColumnIPv4>()) {
                 col->Append(*(struct in_addr*)addr);
                 return;
             }
             break;
         case Type::Code::IPv6:
+            if (ipv == 4) {
+                struct in6_addr _addr = {};
+                _addr.s6_addr32[2] = 0x0000ffff;
+                _addr.s6_addr32[3] = ((struct in_addr*)addr)->s_addr;
+                addr = (uint8_t*)&_addr;
+            }
+            else if (ipv != 6) {
+                mlfatal("unable to append ColumnIPv6, not ipv == 4/6");
+            }
             if (auto col = (*self)->As<ColumnIPv6>()) {
                 col->Append(*(struct in6_addr*)addr);
                 return;
