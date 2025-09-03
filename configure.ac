@@ -28,8 +28,8 @@ AC_SUBST([DNSJIT_ROOT])
 AS_IF([test "x$ac_cv_path_DNSJIT" = "x"], [
   AC_MSG_ERROR([dnsjit was not found])
 ])
-AC_MSG_CHECKING([for dnsjit >= 1.3.0])
-AS_IF(["$DNSJIT" "$srcdir/dnsjit_version.lua" 1 3 0], [
+AC_MSG_CHECKING([for dnsjit >= 1.5.0])
+AS_IF(["$DNSJIT" "$srcdir/dnsjit_version.lua" 1 5 0], [
   AC_MSG_RESULT([yes])
 ], [
   AC_MSG_RESULT([no])

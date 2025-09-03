@@ -30,6 +30,10 @@ void lib_clickhouse_column_append_timespec(lib_clickhouse_column_t*, core_timesp
 void lib_clickhouse_column_append_ipaddr(lib_clickhouse_column_t*, uint8_t, uint8_t*);
 void lib_clickhouse_column_clear(lib_clickhouse_column_t*);
 
+lib_clickhouse_column_t* lib_clickhouse_column_array_new(enum lib_clickhouse_column_type);
+lib_clickhouse_column_t* lib_clickhouse_column_array_new_datetime64(int);
+void lib_clickhouse_column_array_append(lib_clickhouse_column_t*, lib_clickhouse_column_t*);
+
 
 /* BLOCK */
 

@@ -22,4 +22,19 @@ function ClientOptions:set_port(port)
     return C.lib_clickhouse_client_options_set(self.obj, "LIB_CLICKHOUSE_CLIENT_OPTION_PORT", nil, port)
 end
 
+-- TODO
+function ClientOptions:set_user(user)
+    return C.lib_clickhouse_client_options_set(self.obj, "LIB_CLICKHOUSE_CLIENT_OPTION_USER", user, 0)
+end
+
+-- TODO
+function ClientOptions:set_password(password)
+    return C.lib_clickhouse_client_options_set(self.obj, "LIB_CLICKHOUSE_CLIENT_OPTION_PASSWORD", password, 0)
+end
+
+-- TODO
+function ClientOptions:set_default_database(database)
+    return C.lib_clickhouse_client_options_set(self.obj, "LIB_CLICKHOUSE_CLIENT_OPTION_DEFAULT_DATABASE", database, 0)
+end
+
 return ClientOptions

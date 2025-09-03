@@ -101,4 +101,69 @@ function Column:clear()
     C.lib_clickhouse_column_clear(self.obj)
 end
 
+-- Create a new Clickhouse Column array.
+function Column.new_array(type)
+    local self = {
+        obj = C.lib_clickhouse_column_array_new(type)
+    }
+    ffi.gc(self.obj, C.lib_clickhouse_column_delete)
+    return setmetatable(self, { __index = Column })
+end
+
+function Column.new_int8_array()
+    return Column.new_array("LIB_CLICKHOUSE_COLUMN_TYPE_INT8")
+end
+
+function Column.new_int16_array()
+    return Column.new_array("LIB_CLICKHOUSE_COLUMN_TYPE_INT16")
+end
+
+function Column.new_int32_array()
+    return Column.new_array("LIB_CLICKHOUSE_COLUMN_TYPE_INT32")
+end
+
+function Column.new_int64_array()
+    return Column.new_array("LIB_CLICKHOUSE_COLUMN_TYPE_INT64")
+end
+
+function Column.new_uint8_array()
+    return Column.new_array("LIB_CLICKHOUSE_COLUMN_TYPE_UINT8")
+end
+
+function Column.new_uint16_array()
+    return Column.new_array("LIB_CLICKHOUSE_COLUMN_TYPE_UINT16")
+end
+
+function Column.new_uint32_array()
+    return Column.new_array("LIB_CLICKHOUSE_COLUMN_TYPE_UINT32")
+end
+
+function Column.new_uint64_array()
+    return Column.new_array("LIB_CLICKHOUSE_COLUMN_TYPE_UINT64")
+end
+
+function Column.new_string_array()
+    return Column.new_array("LIB_CLICKHOUSE_COLUMN_TYPE_STRING")
+end
+
+function Column.new_datetime64_array(decimals)
+    local self = {
+        obj = C.lib_clickhouse_column_array_new_datetime64(decimals)
+    }
+    ffi.gc(self.obj, C.lib_clickhouse_column_delete)
+    return setmetatable(self, { __index = Column })
+end
+
+function Column.new_ipv4_array()
+    return Column.new_array("LIB_CLICKHOUSE_COLUMN_TYPE_IPV4")
+end
+
+function Column.new_ipv6_array()
+    return Column.new_array("LIB_CLICKHOUSE_COLUMN_TYPE_IPV6")
+end
+
+function Column:array_append(column)
+    C.lib_clickhouse_column_array_append(self.obj, column.obj)
+end
+
 return Column

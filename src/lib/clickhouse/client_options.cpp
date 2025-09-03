@@ -23,7 +23,7 @@ lib_clickhouse_client_options_t* lib_clickhouse_client_options_new()
     try {
         options->SetHost("localhost");
         options->SetPort(9000);
-        options->SetUser("default");
+        options->SetUser("default"); // TODO: is this really "default" default?
         options->SetPassword("");
         options->SetDefaultDatabase("default");
     } catch (const std::exception& e) {
